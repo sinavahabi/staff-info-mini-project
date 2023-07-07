@@ -1,0 +1,128 @@
+body {
+    font-family: Ebrima;
+    margin: 10px;
+}
+
+header {
+    text-align: center;
+}
+
+table {
+    border-collapse: collapse;
+}
+
+thead {
+    background-color: rgb(167, 167, 167);
+}
+
+.rows:nth-child(even) {
+    background-color: #eef0f1;
+}
+
+th {
+    padding: 5px 10px;
+    font-family: Calibri;
+    text-align: center;
+}
+
+td {
+    padding: 10px 15px;
+    transition: padding 2s ease;
+}
+
+.main {
+    padding: 5px;
+}
+
+.save-btn, .edit-btn, .clear-btn {
+    display: none;
+    border-radius: 3px;
+}
+
+.save-btn {
+    color: rgb(19, 214, 19);
+    background-color: white;
+    border: 1px solid rgb(19, 214, 19);
+}
+
+.save-btn:hover {
+    border: 3px solid rgba(19, 214, 19, .4);
+}
+
+.edit-btn {
+    color: rgb(247, 156, 0);
+    background-color: white;
+    border: 1px solid rgb(247, 156, 0);
+}
+
+.edit-btn:hover {
+    border: 3px solid rgba(247, 156, 0, .4);
+}
+
+.clear-btn {
+    color: rgb(255, 0, 0);
+    background-color: white;
+    border: 1px solid rgb(255, 0, 0);
+}
+
+.clear-btn:hover {
+    border: 3px solid rgba(255, 0, 0, .4);
+}
+
+input {
+    box-sizing: border-box;
+    border: 1px solid royalblue;
+    border-radius: 5px;
+    padding: 2px;
+}
+
+input:focus {
+    border: 2px solid skyblue;
+    outline: none;
+}
+
+.name-input {
+    width: 75px;
+    font: 13px "Fira Code";
+}
+
+.last-name-input {
+    width: 100px;
+    font: 13px "Fira Code";
+}
+
+.age-input, .gender-input, .work-record-input {
+    width: 38px;
+    height: 38px;
+    border-radius: 100%;
+    text-align: center;
+    cursor: pointer;
+}
+
+.space {
+    font-size: 12.5px;
+}
+
+.phone-input {
+    width: 133px;
+    font: 12.5px "Cascadia Code";
+}
+
+.address-input {
+    width: 170px;
+    font-size: 12px;
+}
+
+select {
+    cursor: pointer; 
+    font-size: .8rem !important;
+}
+
+#deleteRow {
+    font-size: 20px;
+}
+
+#deleteTable {
+    width: 20px;
+    height: 20px;
+}
