@@ -1,0 +1,36 @@
+form {
+    /* border: 1px solid black; */
+    box-sizing: border-box;
+    box-shadow:0 0 10px rgba(16, 16, 16, 0.586);
+    border-radius: 3px;
+    padding: 10px;
+    display: block;
+    width: 30%;
+    margin: 50px auto;
+}
+
+.email-style {
+    font-size: 16px;
+}
+
+.span-mail {
+    font-size: 15px;
+}
+
+.span-before {
+    font-size: 17px;
+}
+
+.lock-style {
+    font-size: 18px;
+}
+
+.error {
+    display: inline-block;
+    padding: 4px 6px;
+    background-color: rgb(255, 192, 203, .6);
+    color: rgba(255, 0, 0, .8);
+    margin-bottom: 3px;
+    border-radius: 5px;
+    font: 13px monospace;
+}

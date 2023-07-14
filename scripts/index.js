@@ -1,3 +1,10 @@
+/*
+    Program: Staff Information Table
+    Author: sina vahabi
+    Copyright: 2023/07
+*/
+
+
 "use strict";
 
 /* 
@@ -8,17 +15,17 @@
 let count = 1;
 let counter = 1;
 
-// Getting main elements of the static html page. 
+// Getting main elements of the static html page with DOM searching. 
 const divElem = document.querySelector("#container");
 const btnTable = document.getElementById("add-table");
 const btnRow = document.getElementById("add-row");
 
 // Using "addEventListener" to keep track of "New Table" and "New Row" buttons and add single number to "count" and "counter" variables as said above.
-btnTable.addEventListener("click", function () {
+btnTable.addEventListener("click", () => {
     count++;
 });
 
-btnRow.addEventListener("click", function () {
+btnRow.addEventListener("click", () => {
     counter++;
 });
 
@@ -26,10 +33,9 @@ btnRow.addEventListener("click", function () {
 btnRow.disabled = true; 
 
 // Creating a function to add a new table on the html document when user clicks on the related button.
-function addTable() {
+const addTable = () => {
     const createTable = document.createElement("table");
     createTable.classList.add("tables" ,`table${count}`);
-    console.log(`table number${count} is created`);
     // Adding following elements as table children.
     const tableHead = `
         <thead>
@@ -52,16 +58,19 @@ function addTable() {
         </thead>
     `;
     createTable.innerHTML = tableHead;
+    // Creating and appending new div to each table as their previous sibling to make new created tables look better more clear on the page. 
+    const createDiv = document.createElement("div");
+    createDiv.innerHTML = "<hr>";
+    divElem.append(createDiv);
     divElem.append(createTable);
     // Making button available.
     btnRow.disabled = false;
-}
+};
 
 // Creating a function to add a new row to recent created table when user clicks on the related button.
-function addRow() {
+const addRow = () => {
     // Using 'try catch()' conditions to make sure user cannot add a new row when there is no table to attach to.
-    try{
-        console.log(`creating row number${counter}`);
+    try {
         const createRow = document.createElement("tr");
         createRow.classList.add("rows", `row${counter}`);
         createRow.setAttribute("onmouseover", "mouseOverRow(this)");
@@ -178,40 +187,43 @@ function addRow() {
         createRow.innerHTML = userInput;
         // Getting last created table specifically in order to append new row to it.
         const tableElem = document.getElementsByClassName(`table${count-1}`)[0];
-        console.log(`added to Table number${count-1}`);
         tableElem.append(createRow);
     }
     catch(err) {
         // Responding properly to user wrong action.
         btnRow.disabled = true;
-        alert("You need to create a table first!");
+        alert("You need to create a new table first!");
     }
-}
+};
 
 // Creating "save" function to help user for saving inserted input on the related row of the table, when the related button is clicked.
 // In fact after user pressed the mentioned button, inserted input will be set to "readOnly". 
-function save(btn) {
+const save = (btn) => {
+    // Getting created "save button" from html page with DOM navigation. 
     const nameInput = btn.parentNode.parentNode.getElementsByClassName("user-input")[0];
     nameInput.readOnly = true;
-}
+};
 
 // Creating "edit" function to help user to edit saved data on the related row of the table.
 // In fact after user pressed the mentioned button, saved data will exit the "readOnly" state.
-function edit(btn) {
+const edit = (btn) => {
+    // Getting created "edit button" from html page with DOM navigation.
     const nameInput = btn.parentNode.parentNode.getElementsByClassName("user-input")[0];
     nameInput.readOnly = false;
-}
+};
 
 // Creating "clearValue" function to help user to clear saved data on the related row of the table.
 // In fact after user pressed the mentioned button, value attribute will be set to nothing and inserted data will be deleted.
-function clearValue(btn) {
+const clearValue = (btn) => {
+    // Getting created "clear button" from html page with DOM navigation.
     const nameInput = btn.parentNode.parentNode.getElementsByClassName("user-input")[0];
     nameInput.readOnly = false;
     nameInput.value = "";
-}
+};
 
 // Defining this function will make buttons visible nicely and slowly in that part ("td" element) of the table.
-function mouseOver(divElem) {
+const mouseOver = (divElem) => {
+    // Getting recent created button elements from html page with DOM searching and DOM navigation to modify some styles. 
     const saveBtn = divElem.getElementsByClassName("save-btn")[0];
     const editBtn = divElem.getElementsByClassName("edit-btn")[0];
     const clearBtn = divElem.getElementsByClassName("clear-btn")[0];
@@ -220,10 +232,11 @@ function mouseOver(divElem) {
     saveBtn.style.display = "inline";
     editBtn.style.display = "inline";
     clearBtn.style.display = "inline";
-} 
+}; 
 
 // Defining this function will make buttons hidden nicely and slowly in that part ("td" element) of the table.
-function mouseOut(divElem) {
+const mouseOut = (divElem) => {
+    // Getting recent created button elements from html page with DOM searching and DOM navigation to modify some styles.
     const saveBtn = divElem.getElementsByClassName("save-btn")[0];
     const editBtn = divElem.getElementsByClassName("edit-btn")[0];
     const clearBtn = divElem.getElementsByClassName("clear-btn")[0];
@@ -232,23 +245,28 @@ function mouseOut(divElem) {
     saveBtn.style.display = "none";
     editBtn.style.display = "none";
     clearBtn.style.display = "none";
-}
+};
 
 // By creating following function we make sure user is capable to delete the exact row their desire, when they press "Del Row" button beside each row.
-function delRow(rowValue) {
+const delRow = (rowValue) => {
+    // Getting created row from html page with DOM navigation to remove the node when user decides.
     const selectedRow = rowValue.parentNode.parentNode;
     selectedRow.remove();
-}
+};
 
 // By creating following function we make sure user is capable to delete the exact table their desire, when they press "Del Table" button beside each table.
-function delTable(tableValue) {
+const delTable = (tableValue) => {
+    // Getting created table from html page with DOM navigation to remove the node when user decides.
     const selectedTable = tableValue.parentNode.parentNode.parentNode.parentNode;
+    const selectedDiv = tableValue.parentNode.parentNode.parentNode.parentNode.previousSibling;
     selectedTable.remove(); 
-}
+    selectedDiv.remove();
+};
 
 // Adding this function will make sure that when ever mouse hovers on each row, all related inputs will show a placeholder text to user.
 // And also it will set inputs with 'type="number"' as their default when they were created.
-function mouseOverRow(thisRow) {
+const mouseOverRow = (thisRow) => {
+    // Getting created row input elements from html page with DOM navigation modify some attributes for the time user mouse hovers on a single row.
     const nameInput = thisRow.childNodes[1].childNodes[1].childNodes[1];
     const lastNameInput = thisRow.childNodes[3].childNodes[1].childNodes[1];
     const ageInput = thisRow.childNodes[5].childNodes[1].childNodes[1];
@@ -269,11 +287,12 @@ function mouseOverRow(thisRow) {
     workRecordInput.min = 1;
     workRecordInput.max = 40;
     workRecordInput.classList.add("user-input", "work-record-input");
-}
+};
 
 // Adding this function will make sure that when ever mouse hovers out of a row, all related inputs will stop showing a placeholder text to user.
 // And also it will change inputs type attribute value from "number" to "text" in order to remove extra filled space (because of input with 'type="number"') and, show inside text exactly in center of the input field.
-function mouseOutRow(thisRow) {
+const mouseOutRow = (thisRow) => {
+    // Getting created row input elements from html page with DOM navigation modify some attributes for the time user mouse hovers out from a single row.
     const nameInput = thisRow.childNodes[1].childNodes[1].childNodes[1];
     const lastNameInput = thisRow.childNodes[3].childNodes[1].childNodes[1];
     const ageInput = thisRow.childNodes[5].childNodes[1].childNodes[1];
@@ -290,4 +309,4 @@ function mouseOutRow(thisRow) {
     workRecordInput.name = "work-record-input";
     workRecordInput.type = "text";
     workRecordInput.classList.add("user-input", "work-record-input");
-}
+};
