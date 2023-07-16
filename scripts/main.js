@@ -1,462 +1,320 @@
+/*
+    Program: Staff Information Table
+    Author: sina vahabi
+    Copyright: 2023/07
+*/
+
+
 "use strict";
 
-// "sign-up.html"
-// Defining "formValidator" class to make things easier and faster.
-class formValidator {
-    constructor(formElem) {
-        // Constructor objects.
-        this.__elem = formElem;
-        this.FocusIn(formElem.elements);
-        this.FocusOut(formElem.elements);
-    }
+/* 
+    Creating some counters:
+        -"count": This variable is assigned to keep track of how many times "New Table" button is pressed and new table is created by it.
+        -"counter": This variable in the other hand is assigned to keep track of how many times "New Row" button is pressed and new row is created and attached to previous table.
+*/
+let count = 1;
+let counter = 1;
 
-    // Methods.
-    // FOCUSIN!
-    FocusIn(elements) {
-        // Creating a function that hides error messages with a number as input.
-        this.hideError = (num) => {
-            // Accessing specific input which has a class with "targetInput" value and, a number that has been specified for each input exactly.
-            const targetError = document.getElementsByClassName("targetInput")[num];
-            // Checking if it exists first. 
-            if (targetError.previousElementSibling){
-                // Then hiding error message.
-                targetError.previousElementSibling.style.display = "none";
-                targetError.previousElementSibling.remove();
-            }
-                
-        }
-        for (let e of elements) {
-            e.addEventListener("focusin", (event) => {
-                // Making sure "focusin" event doesn't include following elements before we start.
-                if (event.target.type != "checkbox" && event.target.tagName != "BUTTON") {
-                    // Check if inputs are not empty by following condition.
-                    if (event.target.value.length == 0) {                     
-                        if (e.parentElement.previousSibling.tagName == "DIV") {
-                            e.parentElement.previousSibling.style.display = "none";
-                            // Removing error nodes for the moment either user focused on specified input or fixed the error by inserting validated input, in order to check error messages elements existence on the page.
-                            e.parentElement.previousSibling.remove();
-                        }            
+// Getting main elements of the static html page with DOM searching. 
+const divElem = document.querySelector("#container");
+const btnTable = document.getElementById("add-table");
+const btnRow = document.getElementById("add-row");
 
-                    }      
-                    // Check if name input is valid by following conditions.
-                    else if (event.target.id == "sign-up-name") {
-                            if (event.target.value.length < 3) {
-                                this.hideError(0);
-                            }
-                            // Make sure name is valid and not included with numbers or any other symbols. 
-                            else if (familyValidator(event.target.value)) {
-                                this.hideError(0);
-                            }
-                    }
-                    // Check if last name input is valid by following conditions.
-                    else if (event.target.id == "sign-up-last") {
-                        if (event.target.value.length < 3) {
-                            this.hideError(1);
-                        }
-                        // Make sure last name is valid and not included with numbers or any other symbols. 
-                        else if (familyValidator(event.target.value)) {
-                            this.hideError(1);
-                        }
-                    }
-                    // Check if email input is valid by following conditions.
-                    else if(event.target.id == "sign-up-email") {
-                        if (!emailValidator(event.target.value)) {
-                            this.hideError(2);
-                        }
-                    }
+// Using "addEventListener" to keep track of "New Table" and "New Row" buttons and add single number to "count" and "counter" variables as said above.
+btnTable.addEventListener("click", () => {
+    count++;
+});
 
-                    // Check username input is valid by following conditions.
-                    else if(event.target.id == "sign-up-username") {
-                        if (event.target.value.length < 4) {
-                            this.hideError(3);
-                        }
-                        // Checking username validation first using ReGex.
-                        else if (usernameValidator(event.target.value)) {
-                            this.hideError(3);
-                        }
-                        // Then program checks if username is started with "@" or not.
-                        else if (event.target.value[0] != "@") {
-                            this.hideError(3);
-                        }
-                         // After that program makes sure username text value is not ended with "." or "-".
-                        else if (event.target.value[event.target.value.length - 1] == "-" || event.target.value[event.target.value.length - 1] == ".") {
-                            this.hideError(3);
-                        }
-                    }
+btnRow.addEventListener("click", () => {
+    counter++;
+});
 
-                    // Check password input is valid by following ReGex.
-                    else if (event.target.id == "sign-up-password") {
-                        if (!passwordValidator(event.target.value)) {
-                            this.hideError(4);
-                        }
-                    }
+// Disabling button for in order to avoid errors if user is trying to create a new row before the table is created itself. 
+btnRow.disabled = true; 
 
-                    // When this function result is true, it means that user input value includes numbers and symbols, otherwise ReGex result will be false.
-                    function familyValidator(regex) {
-                        return /[^a-zA-Z\s]/.test(regex);
-                    }
-                    
-                    // When this function result is false, it means that user input value is not valid by ReGex email validation, otherwise ReGex result will be true.
-                    function emailValidator(regex) {
-                        return /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(regex);
-                    }
-                    
-                    // When this function result is true, it means that user input value is not valid by ReGex username validation, otherwise ReGex result will be false.
-                    function usernameValidator(regex) {
-                        return /[^a-zA-Z\d@._-]/.test(regex);
-                    }
-                    
-                    // When this function result is false, it means that user input value is not valid by ReGex email validation, otherwise ReGex result will be true.
-                    function passwordValidator(regex) {
-                        return /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/.test(regex); 
-                    }
-                }
-            }); 
-        }
-    }
-
-    // FOCUSOUT!
-    FocusOut(elements) {
-        // Creating a function that gets an innerHTML value, class value and, a number as input and, shows error messages.
-        this.showError = (messageText, classValue="empty", num=0) => {
-            // Creating "div" element which is parent of "span" element.
-            const errorContainer = document.createElement("div");
-            errorContainer.classList.add(classValue);
-            errorContainer.innerHTML = `<span class="error">${messageText}</span>`;
-            // Error message is ready and will be added to specified input ("targetInput") with a number, as "targetInput" elements previousSibling.
-            const targetInput = document.getElementsByClassName("targetInput")[num];
-            targetInput.before(errorContainer);
-            // To make sure element is not hidden anymore.
-            errorContainer.style.display = "block";
-        }
-        for (let e of elements) {
-            e.addEventListener("focusout", (event) => {
-                // Making sure "focusout" event doesn't include following elements before we start.
-                if (event.target.type != "checkbox" && event.target.tagName != "BUTTON") {
-                    // Check if inputs are not empty by following conditions.
-                    if (event.target.value.length == 0) {
-                        // In order to show error messages in the field of empty input values program performs a different task.
-                        const errorContainer = document.createElement("div");
-                        errorContainer.classList.add("empty");
-                        errorContainer.innerHTML = "<span class=\"error\">This field cannot be empty!</span>";
-                        // Using "e" variable which is an input element of "form" elements will help to show each input field error where it belongs.
-                        e.parentElement.before(errorContainer);
-                    }
-                    // Check if name input is valid by following conditions.
-                    else if (event.target.id == "sign-up-name") {
-                        // Check if name is not less than 3 characters. 
-                        if (event.target.value.length < 3) {
-                            this.showError("Name cannot be less than 3 characters!", "name-error", 0);
-                        }
-                        // Make sure name is valid and not included with numbers or any other symbols. 
-                        else if (familyValidator(event.target.value)) {
-                            this.showError("Not a valid name!", "name-error", 0);
-                        } else {
-                            // After program was confident about name validation, shown error messages will no longer exist on the page.
-                            const nameError = document.querySelector(".name-error");
-                            if (nameError) {
-                                nameError.style.display = "none"; 
-                            }
-                        }
-                    }
-                    // Check if last name input is valid by following conditions.
-                    else if (event.target.id == "sign-up-last") {
-                        // Check if last name is not less than 3 characters. 
-                        if (event.target.value.length < 3) {
-                            this.showError("Last name cannot be less than 3 characters!", "family-error", 1);
-                        }
-                        // Make sure last name is valid and not included with numbers or any other symbols. 
-                        else if (familyValidator(event.target.value)) {
-                            this.showError("Not a valid last name!", "family-error", 1);
-                        } else {
-                            // After program was confident about last name validation, shown error messages will no longer exist on the page.
-                            const familyError = document.querySelector(".family-error");
-                            if (familyError) {
-                                familyError.style.display = "none"; 
-                            }
-                        }
-                    }
-
-                    // Check if email input is valid by following conditions.
-                    else if(event.target.id == "sign-up-email") {
-                        if (emailValidator(event.target.value)) {
-                            // When program is confident about email validation, shown error messages will no longer exist on the page.
-                            const emailError = document.querySelector(".email-error");
-                            if (emailError) {
-                                emailError.style.display = "none";
-                            }
-                        } else {
-                            this.showError("Not a valid email!", "email-error", 2);
-                        }
-                    }
-
-                    // Check username input is valid by following conditions.
-                    else if(event.target.id == "sign-up-username") {
-                        if (event.target.value.length < 4) {
-                            this.showError("Username cannot be less than 4 characters!", "user-error", 3);
-                        }
-                        // Checking username validation first using ReGex.
-                        else if (usernameValidator(event.target.value)) {
-                            this.showError("Not a valid username!", "user-error", 3);
-                        }
-                        // Then program checks if username is started with "@" or not.
-                        else if (event.target.value[0] != "@") {
-                            this.showError("Username should start with \"@\"", "user-error", 3);
-                        }
-                        // After that program makes sure username text value is not ended with "." or "-".
-                        else if (event.target.value[event.target.value.length - 1] == "-" || event.target.value[event.target.value.length - 1] == ".") {
-                            this.showError("Username can't end with \".\" or \"-\"", "user-error", 3);
-                        } else {
-                            // After program was confident about username validation, shown error messages will no longer exist on the page.
-                            const usernameError = document.querySelector(".user-error");
-                            if (usernameError) {
-                                usernameError.style.display = "none"; 
-                            }
-                        }
-                    }
-
-                    // Check password input is valid by following ReGex.
-                    else if (event.target.id == "sign-up-password") {
-                        if (passwordValidator(event.target.value)) {
-                            // When program is confident about password validation, shown error messages will no longer exist on the page.
-                            const passwordError = document.querySelector(".pass-error");
-                            if (passwordError) {
-                                passwordError.style.display = "none"; 
-                            }
-                        } else {
-                            this.showError("You can't use special characters in your password. Your password also should contain at least one uppercase letter, one lowercase letter, one number, and a minimum of 8 characters!", "pass-error", 4);
-                        }
-                    }
-                    
-                    // When this function result is true, it means that user input value includes numbers and symbols, otherwise ReGex result will be false.
-                    function familyValidator(regex) {
-                        return /[^a-zA-Z\s]/.test(regex);
-                    }
-
-                    // When this function result is false, it means that user input value is not valid by ReGex email validation, otherwise ReGex result will be true.
-                    function emailValidator(regex) {
-                        return /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(regex);
-                    }
-
-                    // When this function result is true, it means that user input value is not valid by ReGex username validation, otherwise ReGex result will be false.
-                    function usernameValidator(regex) {
-                        return /[^a-zA-Z\d@._-]/.test(regex);
-                    }
-
-                    // When this function result is false, it means that user input value is not valid by ReGex email validation, otherwise ReGex result will be true.
-                    function passwordValidator(regex) {
-                        return /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/.test(regex); 
-                    }
-                }
-            }); 
-        }
-    }
-}
-
-// Creating an object from class.
-let formValid;
-try{
-    formValid = new formValidator(signUpForm);
-}
-catch(catchErr){
-    console.log("skipped!");
-}
-
-// Creating an arrow function that declares actions after clicking on "Sign-up" button.
-const signUp = (event) => {
-    // Accessing necessary input elements by DOM searching. 
-    const inputList = document.querySelectorAll(".target");
-
-    // Setting input attributes (name and value) values in order to save them in browser (page) on client side. 
-    for (let item of inputList) {
-        localStorage.setItem(item.name, item.value);
-    }
-    
-    // Making it more clean after deleting irrelevant data to validate essential information, after `sign-up`, later on `login` page.
-    localStorage.removeItem("name");
-    localStorage.removeItem("last name");
-
-    // Prevent the form from being submitted.
-    event.preventDefault();
-
-    // First we check for all input values to make sure user is leaving none of them behind.
-    let flag = true;    
-    for (let i of inputList) {
-        if (i.value == "") {
-            console.log("fill empty fields!");
-            flag = false;
-        }
-    }
-
-    // If above condition are all good, flag variable will stay true and following condition will take care of the rest. 
-    let pageErrors = document.querySelectorAll(".error");
-    // If errors node list exist on the page and, the list length is zero (means there's no error element at the moment(when "sign-up button" has been clicked)) and also, flag is true (means no input field left empty on above statement), then submit form.
-    if (pageErrors && pageErrors.length == 0 && flag) {
-        signUpForm.submit();
-        alert("no errors on the page!");
-    } else {
-        // Show sign-up error message.
-        alert("fix errors!");
-        // After that, program will check for all inputs with error messages and, activate those inputs focus event from below to above. User has to fix input fields issue one by one.
-        for (let err of pageErrors) {
-            switch (err.parentElement.nextElementSibling.childElementCount) {
-                case 1:
-                    err.parentElement.nextElementSibling.childNodes[1].focus();
-                    break;
-                case 2: 
-                    err.parentElement.nextElementSibling.childNodes[3].focus(); 
-                    break;
-                default:
-                    err.parentElement.nextElementSibling.childNodes[3].focus();   
-                    break;
-            }
-        }
-        // Finally, clearing the error list will inform the program that recent errors are no longer in "pageError" list, so that no problem happens next time user tries to sign-up with valid information.
-        pageErrors.forEach((err) => {
-            err.remove();
-        });
-    }
+// Creating a function to add a new table on the html document when user clicks on the related button.
+const addTable = () => {
+    const createTable = document.createElement("table");
+    createTable.classList.add("tables" ,`table${count}`);
+    // Adding following elements as table children.
+    const tableHead = `
+        <thead>
+            <tr>
+                <th class="name-head">First Name</th>
+                <th class="last-name-head">Last Name</th>
+                <th class="age-head">Age</th>
+                <th class="gender-head">Gender</th>
+                <th class-"work-record-head">Work Record</th>
+                <th class="expertise-head">Expertise</th>
+                <th class="expertise-level-head">Expertise Level</th>
+                <th class="phone-head">Phone Number</th>
+                <th class="address-head">Address</th>
+                <th class="delete-btn-head">
+                    <button class="btn btn-outline-danger" onclick="delTable(this)" id="del-table" title="delete table">
+                        <img src="styles/icons/delete.png" alt="delete" id="deleteTable">
+                    </button>
+                </th>
+            </tr>
+        </thead>
+    `;
+    createTable.innerHTML = tableHead;
+    // Creating and appending new div to each table as their previous sibling to make new created tables look better more clear on the page. 
+    const createDiv = document.createElement("div");
+    createDiv.innerHTML = "<hr>";
+    divElem.append(createDiv);
+    divElem.append(createTable);
+    // Making button available.
+    btnRow.disabled = false;
 };
 
-// Creating an arrow function that declares actions after clicking on "Show password" button.
-const showPass = (elemValue) => {
-    // Accessing target input (input element with type="password") by DOM navigation.
-    const passElem = elemValue.parentNode.previousSibling.previousSibling.childNodes[3];
-    // Checking some condition to make buttons work more sensible each time user clicks on the button to show/hide password.
-    if (passElem.type == "password") {
-        passElem.type = "text";
-        // Accessing icon element ("i") by DOM navigation.
-        let lockIcon = passElem.previousElementSibling.childNodes[1];
-        // changing class so that every time user asks to unhidden the password input, the icon will change appearance.
-        lockIcon.className = "fas fa-lock-open";
-    } else {
-        passElem.type = "password";
-        // Accessing icon element ("i") by DOM navigation.
-        let lockIcon = passElem.previousElementSibling.childNodes[1];
-        // changing class so that every time user asks to unhidden the password input, the icon will change appearance.
-        lockIcon.className = "fas fa-lock";
-    }
-}
+// Creating a function to add a new row to recent created table when user clicks on the related button.
+const addRow = () => {
+    // Using 'try catch()' conditions to make sure user cannot add a new row when there is no table to attach to.
+    try {
+        const createRow = document.createElement("tr");
+        createRow.classList.add("rows", `row${counter}`);
+        createRow.setAttribute("onmouseover", "mouseOverRow(this)");
+        createRow.setAttribute("onmouseout", "mouseOutRow(this)")
 
-// "login.html"
-let validationList = [];
-let userInfo = [];
-
-// Creating an arrow function that declares actions after clicking on "Login" button.
-const Login = (event) => {
-    // Accessing necessary input elements by DOM searching. 
-    const selectedInputs = document.querySelectorAll(".info");
-    // Pushing items to global created list variable ("userInfo"), to gather input values which user entered in `login` page.
-    for (let item of selectedInputs) {
-        userInfo.push(item.value);
-    }
-
-    // Pushing items to global created list variable ("validationList"), to gather input values which user entered in `sign-up` page.
-    for (let data in localStorage) {
-        if (localStorage.getItem(data)){
-            validationList.push(localStorage.getItem(data));
-        }
-    }    
-
-    // Making sure user inserted data indexes are positioned exactly as "localStorage" datalist.
-    let selectedIndex = 2;
-    let pos = 0;
-    let temp = userInfo[selectedIndex];
-
-    for (let i = selectedIndex; i >= pos; i--) {
-        userInfo[i] = userInfo[i-1];
-    }
-
-    userInfo[pos] = temp;
-
-    console.log(userInfo);
-    console.log(validationList);
-
-    // Prevent the form from being submitted.
-    event.preventDefault();
-
-    // This is the part which final form validation happens. 
-    if (JSON.stringify(validationList) === JSON.stringify(userInfo)) {
-        // If condition is true and both lists ("validationList" and "validationList") are exactly equal, submit will happen by JavaScript.
-        document.getElementById("login-form").submit();
-        alert("success match!");
-    } else {
-        // If not, user will face an error message and form default behavior which is submit, will stay prevented as same as before.
-        const checkError = document.querySelector("div.login-error-message");
-        // After "checkError" variable is defined, program will be to check if there is already a error message in page or not.
-        const createErrorFunc = (val=false) => {
-            // By defining this arrow function error message is created step by step.
-            const createError = document.createElement("div");
-            createError.className = "login-error-message";
-            createError.innerHTML = `
-                <span class="login-error-message">
-                    Username, email or password is not correct!
-                </span>
-                <button class="close-error" title="close">
-                    <i class="far fa-window-close"></i>
+        // User input elements for each new row.
+        const userInput = `
+            <td>
+                <div class="main" onmouseover="mouseOver(this)" onmouseout="mouseOut(this)">
+                    <input name="name-input" type="text" class="user-input name-input">
+                    <button class="save-btn" onclick="save(this)" title="save">
+                        <i class='far fa-check-square'></i>
+                    </button>
+                    <button class="edit-btn" onclick="edit(this)" title="edit">
+                        <i class='far fa-edit'></i>
+                    </button>
+                    <button class="clear-btn" onclick="clearValue(this)" title="delete">
+                        <i class="fa fa-remove"></i>
+                    </button>
+                </div>    
+            </td>
+            <td>
+                <div class="main" onmouseover="mouseOver(this)" onmouseout="mouseOut(this)">
+                    <input name="last-name-input" type="text" class="user-input last-name-input">
+                    <button class="save-btn" onclick="save(this)" title="save">
+                        <i class='far fa-check-square'></i>
+                    </button>
+                    <button class="edit-btn" onclick="edit(this)" title="edit">
+                        <i class='far fa-edit'></i>
+                    </button>
+                    <button class="clear-btn" onclick="clearValue(this)" title="delete">
+                        <i class="fa fa-remove"></i>
+                    </button>
+                </div>     
+            </td>
+            <td>
+                <div class="main space">
+                    <input name="age-input" type="number" min="18" max="50" class="user-input age-input">
+                </div>     
+            </td>
+            <td>
+                <div class="main space">
+                    Male
+                    <input name=\`gender-input${counter}\` type="radio" class="user-input">
+                    Female
+                    <input name=\`gender-input${counter}\` type="radio" class="user-input">
+                </div>     
+            </td>
+            <td>
+                <div class="main space">
+                    <input name="work-record-input" type="number" min="1" max="40" class="user-input work-record-input">
+                    Years
+                </div>     
+            </td>
+            <td>
+                <div class="main input-group">
+                    <select class="expertise form-select" name="expertise">
+                        <option value="Choose" selected>Choose</option>
+                        <option value="Back-end Developer">Back-end Developer</option>
+                        <option value="Front-end Developer">Front-end Developer</option>
+                        <option value="DevOps">DevOps</option>
+                        <option value="Tech Lead">Tech Lead</option>
+                        <option value="Software Engineer">Software Engineer</option>
+                        <option value="AI Expert">AI Expert</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>     
+            </td>
+            <td>
+                <div class="main input-group">
+                    <select class="expertise-level form-select" name="expertise-level">
+                        <option value="Choose" selected>Choose</option>
+                        <option value="Intern">Intern</option>
+                        <option value="Junior">Junior</option>
+                        <option value="Mid Level">Mid Level</option>
+                        <option value="Senior">Senior</option>
+                    </select>
+                </div>     
+            </td>
+            <td>
+                <div class="main" onmouseover="mouseOver(this)" onmouseout="mouseOut(this)">
+                    <input name="phone-input" type="text" class="user-input phone-input">
+                    <button class="save-btn" onclick="save(this)" title="save">
+                        <i class='far fa-check-square'></i>
+                    </button>
+                    <button class="edit-btn" onclick="edit(this)" title="edit">
+                        <i class='far fa-edit'></i>
+                    </button>
+                    <button class="clear-btn" onclick="clearValue(this)" title="delete">
+                        <i class="fa fa-remove"></i>
+                    </button>
+                </div>     
+            </td>
+            <td>
+                <div class="main" onmouseover="mouseOver(this)" onmouseout="mouseOut(this)">
+                    <input name="address-input" type="text" class="user-input address-input">
+                    <button class="save-btn" onclick="save(this)" title="save">
+                        <i class='far fa-check-square'></i>
+                    </button>
+                    <button class="edit-btn" onclick="edit(this)" title="edit">
+                        <i class='far fa-edit'></i>
+                    </button>
+                    <button class="clear-btn" onclick="clearValue(this)" title="delete">
+                        <i class="fa fa-remove"></i>
+                    </button>
+                </div>     
+            </td>
+            <td>
+                <button class="btn btn-outline-warning" onclick="delRow(this)" id="del-row" title="delete row">
+                    <i class="material-icons" id="deleteRow">delete_sweep</i>
                 </button>
-                `;
-    
-            document.loginForm.before(createError);
-            createError.style.opacity = 1;
-    
-            // Defining two inner "setTimeout" and "setInterval" before "errorTimeout" to make sure it's usable a few codes below.
-            let errorInterval;
-            let errorStop;
-            // After 5 seconds error message will start to fade away for about 10 seconds slowly.
-            const errorTimeout = setTimeout(() => {
-                errorInterval = setInterval(() => {
-                    if (createError.style.opacity > .4) {
-                        createError.style.opacity -= 0.05;
-                    } else {
-                        // Faster error message hiding.
-                        createError.style.opacity -= 0.1;
-                    }
-
-                }, 500);
-                // Making sure error display is fully hidden and, the interval defined above is now cleared.
-                errorStop = setTimeout(() => {
-                    clearInterval(errorInterval);
-                    createError.style.display = "none";
-                    createError.remove();
-                }, 8000);
-            },5000)
-    
-            // Program will listen and wait, the moment user clicks on the error message close button, all timeouts and intervals will be cleared and, the error message will be removed.
-            createError.childNodes[3].addEventListener("click", () => {
-                clearTimeout(errorTimeout);
-                clearInterval(errorInterval);
-                clearTimeout(errorStop);
-                createError.remove();
-            });
-
-            if (val) {
-                // This condition is useful for the time which there is already an error message on the page and, function input "val" is set to true boolean.
-                clearTimeout(errorTimeout);
-                clearInterval(errorInterval);
-                clearTimeout(errorStop);
-                createError.remove();
-            }
-        };
-
-        if (!checkError) {
-            createErrorFunc();
-        } else {
-            createErrorFunc(true);
-        }
+            </td>
+        `;
+        createRow.innerHTML = userInput;
+        // Getting last created table specifically in order to append new row to it.
+        const tableElem = document.getElementsByClassName(`table${count-1}`)[0];
+        tableElem.append(createRow);
     }
+    catch(err) {
+        // Responding properly to user wrong action.
+        btnRow.disabled = true;
+        const errorMessage = document.createElement("div");
+        errorMessage.classList.add("error-msg", "alert", "alert-warning", "alert-dismissible", "fade", "show", "w-100", "text-center", "mx-auto");
+        errorMessage.setAttribute("role", "alert");
+        errorMessage.innerHTML = `
+            You need to add table first! 
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        `;
 
-    // Clearing both lists after each click and validations which happened here to make sure both lists are not overloaded, so that the next time, validation conditions are checked all over again correctly.
-    userInfo = [];
-    validationList = [];
+        container.before(errorMessage);
+    }
 };
 
-// Creating an arrow function that declares actions after clicking on "Show password" button.
-const showLoginPass = () => {
-    const passElem = document.getElementById("password");
-    if (passElem.type == "password") {
-        passElem.type = "text";
-    } else {
-        passElem.type = "password";
-    }
+// Creating "save" function to help user for saving inserted input on the related row of the table, when the related button is clicked.
+// In fact after user pressed the mentioned button, inserted input will be set to "readOnly". 
+const save = (btn) => {
+    // Getting created "save button" from html page with DOM navigation. 
+    const nameInput = btn.parentNode.parentNode.getElementsByClassName("user-input")[0];
+    nameInput.readOnly = true;
+};
+
+// Creating "edit" function to help user to edit saved data on the related row of the table.
+// In fact after user pressed the mentioned button, saved data will exit the "readOnly" state.
+const edit = (btn) => {
+    // Getting created "edit button" from html page with DOM navigation.
+    const nameInput = btn.parentNode.parentNode.getElementsByClassName("user-input")[0];
+    nameInput.readOnly = false;
+};
+
+// Creating "clearValue" function to help user to clear saved data on the related row of the table.
+// In fact after user pressed the mentioned button, value attribute will be set to nothing and inserted data will be deleted.
+const clearValue = (btn) => {
+    // Getting created "clear button" from html page with DOM navigation.
+    const nameInput = btn.parentNode.parentNode.getElementsByClassName("user-input")[0];
+    nameInput.readOnly = false;
+    nameInput.value = "";
+};
+
+// Defining this function will make buttons visible nicely and slowly in that part ("td" element) of the table.
+const mouseOver = (divElem) => {
+    // Getting recent created button elements from html page with DOM searching and DOM navigation to modify some styles. 
+    const saveBtn = divElem.getElementsByClassName("save-btn")[0];
+    const editBtn = divElem.getElementsByClassName("edit-btn")[0];
+    const clearBtn = divElem.getElementsByClassName("clear-btn")[0];
+    const tableData = divElem.parentNode;
+    tableData.style.padding = "10px 20px";
+    saveBtn.style.display = "inline";
+    editBtn.style.display = "inline";
+    clearBtn.style.display = "inline";
+}; 
+
+// Defining this function will make buttons hidden nicely and slowly in that part ("td" element) of the table.
+const mouseOut = (divElem) => {
+    // Getting recent created button elements from html page with DOM searching and DOM navigation to modify some styles.
+    const saveBtn = divElem.getElementsByClassName("save-btn")[0];
+    const editBtn = divElem.getElementsByClassName("edit-btn")[0];
+    const clearBtn = divElem.getElementsByClassName("clear-btn")[0];
+    const tableData = divElem.parentNode;
+    tableData.style.padding = "10px 15px";
+    saveBtn.style.display = "none";
+    editBtn.style.display = "none";
+    clearBtn.style.display = "none";
+};
+
+// By creating following function we make sure user is capable to delete the exact row their desire, when they press "Del Row" button beside each row.
+const delRow = (rowValue) => {
+    // Getting created row from html page with DOM navigation to remove the node when user decides.
+    const selectedRow = rowValue.parentNode.parentNode;
+    selectedRow.remove();
+};
+
+// By creating following function we make sure user is capable to delete the exact table their desire, when they press "Del Table" button beside each table.
+const delTable = (tableValue) => {
+    // Getting created table from html page with DOM navigation to remove the node when user decides.
+    const selectedTable = tableValue.parentNode.parentNode.parentNode.parentNode;
+    const selectedDiv = tableValue.parentNode.parentNode.parentNode.parentNode.previousSibling;
+    selectedTable.remove(); 
+    selectedDiv.remove();
+};
+
+// Adding this function will make sure that when ever mouse hovers on each row, all related inputs will show a placeholder text to user.
+// And also it will set inputs with 'type="number"' as their default when they were created.
+const mouseOverRow = (thisRow) => {
+    // Getting created row input elements from html page with DOM navigation modify some attributes for the time user mouse hovers on a single row.
+    const nameInput = thisRow.childNodes[1].childNodes[1].childNodes[1];
+    const lastNameInput = thisRow.childNodes[3].childNodes[1].childNodes[1];
+    const ageInput = thisRow.childNodes[5].childNodes[1].childNodes[1];
+    const workRecordInput = thisRow.childNodes[9].childNodes[1].childNodes[1];
+    const phoneInput = thisRow.childNodes[15].childNodes[1].childNodes[1];
+    const addressInput = thisRow.childNodes[17].childNodes[1].childNodes[1];
+    nameInput.placeholder = "name";
+    lastNameInput.placeholder = "last name";
+    phoneInput.placeholder = "+98-912-899-94-80";
+    addressInput.placeholder = "Tehran City-Pasdaran St-Davoud Eslami St-Ghoba Alley-Block 1-Unit 3";
+    ageInput.name = "age-input";
+    ageInput.type = "number";
+    ageInput.min = 18;
+    ageInput.max= 50;
+    ageInput.classList.add("user-input", "age-input");
+    workRecordInput.name = "work-record-input";
+    workRecordInput.type = "number";
+    workRecordInput.min = 1;
+    workRecordInput.max = 40;
+    workRecordInput.classList.add("user-input", "work-record-input");
+};
+
+// Adding this function will make sure that when ever mouse hovers out of a row, all related inputs will stop showing a placeholder text to user.
+// And also it will change inputs type attribute value from "number" to "text" in order to remove extra filled space (because of input with 'type="number"') and, show inside text exactly in center of the input field.
+const mouseOutRow = (thisRow) => {
+    // Getting created row input elements from html page with DOM navigation modify some attributes for the time user mouse hovers out from a single row.
+    const nameInput = thisRow.childNodes[1].childNodes[1].childNodes[1];
+    const lastNameInput = thisRow.childNodes[3].childNodes[1].childNodes[1];
+    const ageInput = thisRow.childNodes[5].childNodes[1].childNodes[1];
+    const workRecordInput = thisRow.childNodes[9].childNodes[1].childNodes[1];
+    const phoneInput = thisRow.childNodes[15].childNodes[1].childNodes[1];
+    const addressInput = thisRow.childNodes[17].childNodes[1].childNodes[1];
+    nameInput.placeholder = "";
+    lastNameInput.placeholder = "";
+    phoneInput.placeholder = "";
+    addressInput.placeholder = "";
+    ageInput.name = "age-input";
+    ageInput.type = "text";
+    ageInput.classList.add("user-input", "age-input");
+    workRecordInput.name = "work-record-input";
+    workRecordInput.type = "text";
+    workRecordInput.classList.add("user-input", "work-record-input");
 };

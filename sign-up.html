@@ -10,17 +10,14 @@
     <link rel="stylesheet" href="styles/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="styles/sign-up.css">
     <script src="styles/icons/icons-style.js"></script>
+    <script src="styles/bootstrap/js/bootstrap.min.js"></script>
 </head>
 
 <body>
-    <header>
-        <h1 class="m-1 text-center">Welcome to sing-up page</h1>
-    </header>
-    <br>
-    <hr>
+
     <form action="login.html" method="post" id="sign-up-form" name="signUpForm">
         <header>
-            <h2 class="text-center text-info my-5">Sign-up</h2>
+            <h1 class="text-center text-info my-5">Sign-up <span class="welcome">Your Account</span></h1>
         </header>
         <div class="input-group mb-2 targetInput">
             <input name="name" id="sign-up-name" type="text" maxlength="25" minlength="3" class="form-control target" placeholder="Name" aria-label="Name" autocomplete="name" title="name" required autofocus>
@@ -65,7 +62,10 @@
             <button id="clear-form" type="reset" class="btn btn-outline-dark m-1 btn-sm" title="clear form here">Clear form</button>
         </div>
     </form>
-    <script src="scripts/main.js"></script>
+    <script src="scripts/sign-up.js"></script>
+    <!-- If live server is ran! -->
+    <!-- <script src="http://127.0.0.1:5500/scripts/sign-up.js"></script> -->
+    
 </body>
 
 </html>

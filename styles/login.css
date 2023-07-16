@@ -8,7 +8,7 @@ form {
     width: 450px;
     height: 570px;
     background-color: white;
-    margin: 5% auto auto auto;
+    margin: 4% auto auto auto;
     border-radius: 1em;
 }
 
@@ -63,10 +63,10 @@ input:focus {
 
 h1 {
     font-family: Arial;
-    font-size: 20px;
+    font-size: 25px;
     font-weight: bold;
     text-align: center;
-    padding-top: 4em;
+    padding-top: 3em;
     padding-bottom: 1em;
 }
 
@@ -92,14 +92,14 @@ a.forgot {
 
 div.login-error-message {
     width: 50%;
-    height: 25px;
+    height: 22px;
     text-align: center;
     background-color: white;
     font: 18px Arial;
-    margin: 1% auto 0 auto;
+    margin: 0 auto;
     padding: 5px 2px;
     border-radius: 5px;
-    line-height: 30px;
+    line-height: 25px;
 }
 
 span.login-error-message {
@@ -115,7 +115,7 @@ button.close-error {
 .fa-window-close {
     color: red;
     background-color: white;
-    font-size: 20px;
+    font-size: 17px;
     padding: 3px;
     border-radius: 3px;
 }
@@ -134,4 +134,20 @@ button.close-error {
     background-color: rgb(228, 9, 75);
     padding: 3px;
     border-radius: 3px;
+}
+
+.login-success-message {
+    width: 50%;
+    height: 25px;
+    text-align: center;
+    background-color: rgb(17, 235, 210);
+    font: 18px Arial;
+    margin: 0 auto;
+    padding: 5px 2px;
+    border-radius: 5px;
+    line-height: 27px;
+}
+
+span.login-success-message {
+    color: darkgreen;
 }

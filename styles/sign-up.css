@@ -8,6 +8,14 @@ form {
     margin: 50px auto;
 }
 
+h1 {
+    font-size: 25px;
+}
+
+.welcome {
+    color: black;
+}
+
 .email-style {
     font-size: 16px;
 }
@@ -50,4 +58,12 @@ form {
 .holder, .sec-holder {
     margin: 6px auto;
     text-align: center;
+}
+
+.sign-up-error {
+    font: bold 20px Lora;
+}
+
+.sign-up-success {
+    font: bold 20px Lora;
 }
