@@ -23,7 +23,7 @@
             <h2 class="text-center text-info my-5">Sign-up</h2>
         </header>
         <div class="input-group mb-2 targetInput">
-            <input name="name" id="sign-up-name" type="text" maxlength="25" minlength="3" class="form-control target" placeholder="Name" aria-label="Name" autocomplete="name" title="name" required>
+            <input name="name" id="sign-up-name" type="text" maxlength="25" minlength="3" class="form-control target" placeholder="Name" aria-label="Name" autocomplete="name" title="name" required autofocus>
         </div>
 
         <div class="input-group mb-2 targetInput">
@@ -45,7 +45,7 @@
 
         <div class="input-group mb-3 targetInput">
             <span class="input-group-text">
-                <i class="fas fa-lock lock-style"></i>
+                <i class="fas fa-lock"></i>
             </span>
             <input name="password" id="sign-up-password" type="password" maxlength="16" minlength="8" class="form-control target" placeholder="Password" aria-label="Password" title="password" required>
         </div>
@@ -55,14 +55,15 @@
             <input class="form-check-input" id="show-pass" type="checkbox" onclick="showPass(this)">
         </div>
         
-        <button id="sign-up" type="submit" onclick="signUp(event)" class="btn btn-primary d-block my-4 mx-auto w-100"
-            title="sign-up here">Sing-up</button>
-        <span>Already have an account?</span>
-        <a class="btn btn-outline-success m-2" href="login.html" role="button" title="sign-in here">Sign-in</a>
-        <a class="btn btn-outline-warning m-2" href="help.html" role="button" title="more information about this page" target="_blank">Need
-            help?</a>
-
-        <!-- <button id="reset" type="reset">reset</button> -->
+        <button id="sign-up" type="submit" onclick="signUp(event)" class="btn btn-primary d-block my-3 mx-auto w-100" title="sign-up here">Sing-up</button>
+        <div class="holder">
+            <span class="question">Already have an account?</span>
+            <a class="btn btn-outline-success m-1" href="login.html" role="button" title="sign-in here">Sign-in</a>
+        </div>
+        <div class="sec-holder">
+            <a class="btn btn-outline-warning m-1 btn-sm" href="help.html" role="button" title="more information about this page" target="_blank">Need help?</a>
+            <button id="clear-form" type="reset" class="btn btn-outline-dark m-1 btn-sm" title="clear form here">Clear form</button>
+        </div>
     </form>
     <script src="scripts/main.js"></script>
 </body>

@@ -1,5 +1,4 @@
 form {
-    /* border: 1px solid black; */
     box-sizing: border-box;
     box-shadow:0 0 10px rgba(16, 16, 16, 0.586);
     border-radius: 3px;
@@ -21,16 +20,34 @@ form {
     font-size: 17px;
 }
 
-.lock-style {
+#show-pass:hover {
+    cursor: pointer;
+}
+
+.fa-lock {
     font-size: 18px;
+}
+
+.fa-lock-open {
+    font-size: 15px;
+}
+
+.question {
+    font-size: 16.5px;
 }
 
 .error {
     display: inline-block;
-    padding: 4px 6px;
+    padding: 3px 6px;
     background-color: rgb(255, 192, 203, .6);
     color: rgba(255, 0, 0, .8);
     margin-bottom: 3px;
     border-radius: 5px;
-    font: 13px monospace;
+    font: bold 15px Lora;
+    line-height: 20px;
+}
+
+.holder, .sec-holder {
+    margin: 6px auto;
+    text-align: center;
 }

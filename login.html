@@ -5,21 +5,25 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login page</title>
+    <link rel="stylesheet" href="styles/icons/font-awesome.min.css">
     <link rel="stylesheet" href="styles/login.css">
+    <script src="styles/icons/icons-style.js"></script>
 </head>
 <body>
     
     <form action="index.html" method="post" id="login-form" name="loginForm">
-        <p>
+        <h1>
             <span>Login</span> Your Account
-        </p>
-        <input class="info" type="text" name="username" id="username" placeholder="Username">
-        <input class="info" type="email" name="email" id="email" placeholder="Your email">
-        <input class="info" type="password" name="password" id="password" placeholder="Password">
-        <input type="submit" name="login" id="login" value="Login" onclick="Login(event)">
-        <a href="#" class="forgot">Forgot password?</a>
+        </h1>
+        <input class="info" type="text" name="username" id="username" placeholder="Username" required title="username" autocomplete="name">
+        <input class="info" type="email" name="email" id="email" placeholder="Your email" required title="email" autocomplete="email">
+        <input class="info" type="password" name="password" id="password" placeholder="Password" required title="password">
+        <input type="checkbox" name="password-check" id="pass-check" onclick="showLoginPass()">
+        <label for="pass-check">Show password</label>
+        <input type="submit" name="login" id="login" value="Login" onclick="Login(event)" title="login here">
+        <a href="reset-pass.html" class="forgot" title="reset password" target="_blank">Forgot password?</a>
         <br>
-        <a href="sign-up.html" class="create">Create account</a>
+        <a href="sign-up.html" class="create" title="sign-up here">Create account</a>
     </form>
 
     <script src="scripts/main.js"></script>
