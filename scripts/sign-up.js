@@ -289,12 +289,14 @@ const signUp = (event) => {
             createMessage.classList.add("sign-up-success", "alert", "alert-success", "w-50", "text-center", "mx-auto");
             createMessage.setAttribute("role", "alert");
             createMessage.innerHTML = `
-                Sign-up was success ✅ 
+                <span class="sign-up-success-msg">
+                    Sign-up was success ✅ 
+                </span>
             `;
     
             document.signUpForm.before(createMessage);
 
-            // Keeps success login message on the screen for about 1 sec and, half.
+            // Keeps success sign-up message on the screen for about 1 sec and, half.
             setTimeout(() => {
                 createMessage.remove();
                 signUpForm.submit();
@@ -305,12 +307,20 @@ const signUp = (event) => {
     } else {
         // If not, user will face an error message and form default behavior which is submit, will stay prevented as same as before.
         const createErrorFunc = () => {
+            // Creating a constant to check and, avoid more than one error message on the display at the same time.
+            const getError = document.querySelector(".sign-up-error");  
+            if (getError) {
+                getError.remove();
+            }
+
             // By defining this arrow function error message is created step by step.
             const createError = document.createElement("div");
             createError.classList.add("sign-up-error", "alert", "alert-danger", "alert-dismissible", "fade", "show", "w-50", "text-center", "mx-auto");
             createError.setAttribute("role", "alert");
             createError.innerHTML = `
-                Fix input errors and try again! ❌    
+                <span class="sign-up-error-msg">
+                    Fix input errors and try again! ❌  
+                </span>  
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             `;
     
