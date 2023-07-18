@@ -1,8 +1,9 @@
 Staff Information Management
 
+Languages: JavaScript, HTML, CSS 
+
 Topics: HTML events, Error handling, User interaction, User management, OOP, Form validation, Responsive website, Responsive design, Bootstrap5, Font awesome, Regex, Git
 
-languages: JavaScript, HTML, CSS 
 
 """Notice that the main page is "login.html" file for user to begin with."""
 First of all, I got to say this project meant to be a very small and, minimal project which will only serve its main purpose as it is in "index.html" file but, after a while I made a decision to add login/sign-up form to this project as well.

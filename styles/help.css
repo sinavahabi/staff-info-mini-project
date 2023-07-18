@@ -54,5 +54,26 @@ li.list-head:hover {
 
 .paragraph {
     width:100%;
-    border: 1px solid red;
+    border: 2px solid black;
+    border-radius: 5px;
+}
+
+#head2 {
+    font-size: 23px;
+}
+
+#head3 {
+    font-size: 20px;
+}
+
+.JS, .HTML, .CSS {
+    border-radius: 5px;
+}
+
+.CSS {
+    background-color: slateblue;
+}
+
+#text-header, #text-footer {
+    border-radius: 5px;
 }
