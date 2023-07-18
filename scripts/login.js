@@ -30,6 +30,9 @@ const Login = (event) => {
 
     userInfo[pos] = temp;
 
+    console.log(userInfo);
+    console.log(validationList);
+
     // Prevent the form from being submitted.
     event.preventDefault();
 
@@ -43,6 +46,8 @@ const Login = (event) => {
                 <span class="login-success-message">
                     Success login ✔️  
                 </span>
+                <div class="spinner-border text-success d-inline-block float-end mt-1 me-1" role="status">
+                </div>
             `;
     
             document.loginForm.before(createMessage);

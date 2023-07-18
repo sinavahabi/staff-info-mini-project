@@ -292,6 +292,8 @@ const signUp = (event) => {
                 <span class="sign-up-success-msg">
                     Sign-up was success ✅ 
                 </span>
+                <div class="spinner-border text-success d-inline-block float-end me-1" role="status">
+                </div>
             `;
     
             document.signUpForm.before(createMessage);
