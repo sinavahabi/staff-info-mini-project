@@ -30,9 +30,6 @@ const Login = (event) => {
 
     userInfo[pos] = temp;
 
-    console.log(userInfo);
-    console.log(validationList);
-
     // Prevent the form from being submitted.
     event.preventDefault();
 

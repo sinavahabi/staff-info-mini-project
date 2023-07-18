@@ -1,9 +1,8 @@
 /*
-    Program: Staff Information Table
+    Program: Staff Information Management
     Author: sina vahabi
     Copyright: 2023/07
 */
-
 
 "use strict";
 
@@ -191,6 +190,10 @@ const addRow = () => {
     }
     catch(err) {
         // Responding properly to user wrong action.
+        if (document.querySelector(".error-msg")) {
+            // To check and avoid more than one error message at the same time in page.
+            document.querySelector(".error-msg").remove();
+        }
         btnRow.disabled = true;
         const errorMessage = document.createElement("div");
         errorMessage.classList.add("error-msg", "alert", "alert-warning", "alert-dismissible", "fade", "show", "w-100", "text-center", "mx-auto");

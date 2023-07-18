@@ -20,52 +20,61 @@
             <h1 class="text-center text-info my-5">Sign-up <span class="welcome">Your Account</span></h1>
         </header>
         <div class="input-group mb-2 targetInput">
-            <input name="name" id="sign-up-name" type="text" maxlength="25" minlength="3" class="form-control target" placeholder="Name" aria-label="Name" autocomplete="name" title="name" required autofocus>
+            <input name="name" id="sign-up-name" type="text" maxlength="25" minlength="3" class="form-control target"
+                placeholder="Name" aria-label="Name" autocomplete="name" title="name" required autofocus>
         </div>
 
         <div class="input-group mb-2 targetInput">
-            <input name="last name" id="sign-up-last" type="text" maxlength="40" minlength="3" class="form-control target" placeholder="Last name" aria-label="Last Name" title="last name" required>
+            <input name="last name" id="sign-up-last" type="text" maxlength="40" minlength="3"
+                class="form-control target" placeholder="Last name" aria-label="Last Name" title="last name" required>
         </div>
 
         <div class="input-group mb-2 targetInput">
             <span class="input-group-text">
                 <i class="material-icons email-style">email</i>
             </span>
-            <input name="email" id="sign-up-email" type="email" class="form-control target" placeholder="Email" aria-label="Email" autocomplete="email" title="email" required>
+            <input name="email" id="sign-up-email" type="email" class="form-control target" placeholder="Email"
+                aria-label="Email" autocomplete="email" title="email" required>
             <span class="input-group-text span-mail">@example.com</span>
         </div>
 
         <div class="input-group mb-2 targetInput">
             <span class="input-group-text span-before">@</span>
-            <input name="username" id="sign-up-username" type="text" maxlength="40" minlength="4" class="form-control target" placeholder="Username" aria-label="Username" autocomplete="username" title="username" required>
+            <input name="username" id="sign-up-username" type="text" maxlength="40" minlength="4"
+                class="form-control target" placeholder="Username" aria-label="Username" autocomplete="username"
+                title="username" required>
         </div>
 
         <div class="input-group mb-3 targetInput">
             <span class="input-group-text">
                 <i class="fas fa-lock"></i>
             </span>
-            <input name="password" id="sign-up-password" type="password" maxlength="16" minlength="8" class="form-control target" placeholder="Password" aria-label="Password" title="password" required>
+            <input name="password" id="sign-up-password" type="password" maxlength="16" minlength="8"
+                class="form-control target" placeholder="Password" aria-label="Password" title="password" required>
         </div>
 
         <div class="form-check form-switch">
             <label class="form-check-label" for="show-pass">Show password</label>
             <input class="form-check-input" id="show-pass" type="checkbox" onclick="showPass(this)">
         </div>
-        
-        <button id="sign-up" type="submit" onclick="signUp(event)" class="btn btn-primary d-block my-3 mx-auto w-100" title="sign-up here">Sing-up</button>
+
+        <button id="sign-up" type="submit" onclick="signUp(event)" class="btn btn-primary d-block my-3 mx-auto w-100"
+            title="sign-up here">Sing-up</button>
         <div class="holder">
             <span class="question">Already have an account?</span>
             <a class="btn btn-outline-success m-1" href="login.html" role="button" title="sign-in here">Sign-in</a>
         </div>
         <div class="sec-holder">
-            <a class="btn btn-outline-warning m-1 btn-sm" href="help.html" role="button" title="more information about this page" target="_blank">Need help?</a>
-            <button id="clear-form" type="reset" class="btn btn-outline-dark m-1 btn-sm" title="clear form here">Clear form</button>
+            <a class="btn btn-outline-warning m-1 btn-sm" href="help.html" role="button"
+                title="more information about this page" target="_blank">Need help?</a>
+            <button id="clear-form" type="reset" class="btn btn-outline-dark m-1 btn-sm" title="clear form here">Clear
+                form</button>
         </div>
     </form>
     <script src="scripts/sign-up.js"></script>
     <!-- If live server is ran! -->
     <!-- <script src="http://127.0.0.1:5500/scripts/sign-up.js"></script> -->
-    
+
 </body>
 
 </html>

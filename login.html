@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -11,15 +12,19 @@
     <script src="styles/icons/icons-style.js"></script>
     <script src="styles/bootstrap/js/bootstrap.min.js"></script>
 </head>
+
 <body>
-    
+
     <form action="index.html" method="post" id="login-form" name="loginForm">
         <h1>
             <span>Login</span> Your Account
         </h1>
-        <input class="info" type="text" name="username" id="username" placeholder="Username" required title="username" autocomplete="name">
-        <input class="info" type="email" name="email" id="email" placeholder="Your email" required title="email" autocomplete="email">
-        <input class="info" type="password" name="password" id="password" placeholder="Password" required title="password">
+        <input class="info" type="text" name="username" id="username" placeholder="Username" required title="username"
+            autocomplete="name">
+        <input class="info" type="email" name="email" id="email" placeholder="Your email" required title="email"
+            autocomplete="email">
+        <input class="info" type="password" name="password" id="password" placeholder="Password" required
+            title="password">
         <input type="checkbox" name="password-check" id="pass-check" onclick="showLoginPass()">
         <label for="pass-check">Show password</label>
         <input type="submit" name="login" id="login" value="Login" onclick="Login(event)" title="login here">
@@ -31,6 +36,7 @@
     <script src="scripts/login.js"></script>
     <!-- If live server is ran! -->
     <!-- <script src="http://127.0.0.1:5500/scripts/login.js"></script> -->
-    
+
 </body>
+
 </html>
