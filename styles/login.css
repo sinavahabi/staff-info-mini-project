@@ -1,12 +1,12 @@
 body {
-    background: rgb(2,0,36);
+    background: rgb(2, 0, 36);
     background: linear-gradient(90deg, rgb(24, 17, 168) 0%, rgb(56, 94, 216) 0%, rgb(0, 238, 255) 90%);
 }
 
 form {
     text-align: center;
-    width: 450px;
-    height: 570px;
+    width: 500px;
+    height: 650px;
     background-color: white;
     margin: 4% auto auto auto;
     border-radius: 1em;
@@ -45,8 +45,8 @@ input#login {
     color: aliceblue;
     font-weight: bold;
     margin-top: 2em;
-    background: rgb(2,0,36);
-    background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(30,67,185,1) 0%, rgba(0,198,255,1) 90%);
+    background: rgb(2, 0, 36);
+    background: linear-gradient(90deg, rgba(2, 0, 36, 1) 0%, rgba(30, 67, 185, 1) 0%, rgba(0, 198, 255, 1) 90%);
     border: none;
 }
 
@@ -84,7 +84,7 @@ a {
 
 a:hover {
     opacity: .75;
-}   
+}
 
 a.forgot {
     color: black;
@@ -155,4 +155,33 @@ span.login-success-message {
 
 a.create:visited {
     color: slateblue;
+}
+
+
+@media screen and (max-width:1200px) {
+    form {
+        width: 460px;
+        height: 610px;
+    }
+}
+
+@media screen and (max-width:992px) {
+    form {
+        width: 440px;
+        height: 600px;
+    }
+}
+
+@media screen and (max-width:768px) {
+    form {
+        width: 410px;
+        height: 585px;
+    }
+}
+
+@media screen and (max-width:576px) {
+    form {
+        width: 350px;
+        height: 570px;
+    }
 }

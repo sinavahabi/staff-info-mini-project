@@ -12,7 +12,7 @@ a {
 
 a.active {
     color: white;
-}  
+}
 
 #profile {
     border-radius: 50%;
@@ -53,7 +53,7 @@ li.list-head:hover {
 }
 
 .paragraph {
-    width:100%;
+    width: 100%;
     border: 2px solid black;
     border-radius: 5px;
 }
@@ -66,7 +66,9 @@ li.list-head:hover {
     font-size: 20px;
 }
 
-.JS, .HTML, .CSS {
+.JS,
+.HTML,
+.CSS {
     border-radius: 5px;
 }
 
@@ -74,6 +76,14 @@ li.list-head:hover {
     background-color: slateblue;
 }
 
-#text-header, #text-footer {
+#text-header,
+#text-footer {
     border-radius: 5px;
+}
+
+@media screen and (max-width: 420px) {
+    .CSS {
+        display: block;
+        width: fit-content;
+    }
 }
